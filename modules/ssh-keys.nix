@@ -1,13 +1,13 @@
 # SSH public keys, sourced from ../keys/<user>/<name>.pub.
 #
-# Consume from another flake via `inputs.flakery.lib.sshKeys`:
+# Consume from another flake via `inputs.nixlore.lib.sshKeys`:
 #
-#   users.users.josh.openssh.authorizedKeys.keys = flakery.lib.sshKeys.users.josh;
-#   users.users.admin.openssh.authorizedKeys.keys = flakery.lib.sshKeys.all;
-#   age.secrets.foo.publicKeys = flakery.lib.sshKeys.all;                      # agenix
+#   users.users.josh.openssh.authorizedKeys.keys = nixlore.lib.sshKeys.users.josh;
+#   users.users.admin.openssh.authorizedKeys.keys = nixlore.lib.sshKeys.all;
+#   age.secrets.foo.publicKeys = nixlore.lib.sshKeys.all;                      # agenix
 #   users.users.josh.openssh.authorizedKeys.keyFiles =
-#     builtins.attrValues flakery.lib.sshKeys.files.josh;
-#   environment.etc."my.pub".text = flakery.lib.sshKeys.keys.josh.syl-ed25519;
+#     builtins.attrValues nixlore.lib.sshKeys.files.josh;
+#   environment.etc."my.pub".text = nixlore.lib.sshKeys.keys.josh.syl-ed25519;
 #
 # Add or rotate a key by dropping a `.pub` file into the user's directory; no
 # Nix changes required.

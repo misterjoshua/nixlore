@@ -1,5 +1,5 @@
 {
-  description = "flakery";
+  description = "nixlore";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

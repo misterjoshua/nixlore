@@ -1,10 +1,10 @@
 # age public keys, sourced from ../keys/<user>/<name>.age.
 #
-# Consume from another flake via `inputs.flakery.lib.ageKeys`:
+# Consume from another flake via `inputs.nixlore.lib.ageKeys`:
 #
-#   age -r ${flakery.lib.ageKeys.keys.josh.syl} -o secret.age secret.txt
-#   recipients = flakery.lib.ageKeys.all;
-#   environment.etc."syl.age".source = flakery.lib.ageKeys.files.josh.syl;
+#   age -r ${nixlore.lib.ageKeys.keys.josh.syl} -o secret.age secret.txt
+#   recipients = nixlore.lib.ageKeys.all;
+#   environment.etc."syl.age".source = nixlore.lib.ageKeys.files.josh.syl;
 #
 # Add or rotate a key by dropping a `.age` file into the user's directory; no
 # Nix changes required.
