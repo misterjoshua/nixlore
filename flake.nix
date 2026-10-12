@@ -1,5 +1,5 @@
 {
-  description = "nixlore";
+  description = "josh's SSH public keys: authorized_keys files, and flake data";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
