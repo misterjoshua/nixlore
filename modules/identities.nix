@@ -11,7 +11,6 @@
 #   users.users.josh.openssh.authorizedKeys.keys = ids.sshKeys (ids.by { user = "josh"; });
 #   users.users.josh.openssh.authorizedKeys.keys = ids.sshKeys (ids.by { gesture = true; });
 #   age.secrets.db.publicKeys = ids.sshKeys (ids.by { user = "josh"; host = config.networking.hostName; });
-#   environment.etc."syl.age".text = ids.users.josh.syl.age;
 #   programs.ssh.knownHosts.nas.publicKey = ids.hosts.nas.sshHostKey;
 #
 # `by` ignores fields you leave out and matches null literally when you pass
@@ -93,7 +92,6 @@ let
         "gesture"
         "githubKeyId"
         "ssh"
-        "age"
         "sshHostKey"
       ];
       unknown = lib.subtractLists allowed (lib.attrNames raw);
@@ -120,20 +118,6 @@ let
           singleLine "${display} ssh.${label}" value
       ) (raw.ssh or { });
 
-      age =
-        if !(raw ? age) then
-          null
-        else if !lib.isString raw.age then
-          fail display "age must be a string"
-        else
-          let
-            trimmed = singleLine "${display} age" raw.age;
-          in
-          if lib.match "age1[0-9a-z]+" trimmed == null then
-            fail display "age must be a single age1 recipient"
-          else
-            trimmed;
-
       sshHostKey =
         if !(raw ? sshHostKey) then
           null
@@ -156,7 +140,7 @@ let
       fail display "githubKeyId must be an integer"
     else if !lib.isAttrs (raw.ssh or { }) then
       fail display "ssh must be an attribute set"
-    else if ssh == { } && age == null && sshHostKey == null then
+    else if ssh == { } && sshHostKey == null then
       fail display "identity has no keys"
     else
       {
@@ -169,7 +153,6 @@ let
           gesture
           githubKeyId
           ssh
-          age
           sshHostKey
           ;
       };
@@ -286,8 +269,6 @@ let
 
   sshKeys = records: lib.concatMap (id: lib.attrValues id.ssh) records;
 
-  ageRecipients = records: lib.concatMap (id: lib.optional (id.age != null) id.age) records;
-
   sshMaterial = lib.concatMap (
     id:
     let
@@ -325,7 +306,6 @@ in
         all
         by
         sshKeys
-        ageRecipients
         ;
     };
 
